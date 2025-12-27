@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class CustomerController extends Controller
 {
     public function index()
-    {
+    {  
         $title = 'Customer Registration';
         $url = url('/customer');
         $data = compact('url', 'title');
@@ -30,11 +30,25 @@ class CustomerController extends Controller
         $customer->save();
         return redirect('/customer/view');
     }
-    public function view()
+    public function view(Request $request)
     {
-        $customers = Customer::all();
+        $search = $request['search'] ?? "";
+        if($search){
+            $customers = Customer::where('name' , 'LIKE',
+            "%$search%")->orWhere('email' , 'LIKE',
+            "%$search%") ->paginate(10)
+            ->withQueryString();
+        }else{
+            $customers = Customer::paginate(10);
+        }
+        $data = compact('customers', 'search');
+        return view('customer-view')->with($data  );
+    }
+    public function trash()
+    {
+        $customers = Customer::onlyTrashed()->get();
         $data = compact('customers');
-        return view('customer-view')->with($data);
+        return view('customer-trash')->with($data);
     }
 
     public function delete($id)
@@ -43,7 +57,23 @@ class CustomerController extends Controller
         if (!is_null($customer)) {
             $customer->delete();
         }
-        return redirect('/customer/view');
+        return redirect(route('customer.view'));
+    }
+    public function restore($id)
+    {
+        $customer = Customer::onlyTrashed()->find($id);
+        if (!is_null($customer)) {
+            $customer->restore();
+        }
+        return redirect(route('customer.view'));
+    }
+    public function forcedelete($id)
+    {
+        $customer = Customer::onlyTrashed()->find($id);
+        if (!is_null($customer)) {
+            $customer->forceDelete();
+        }
+        return redirect(route('customer.view'));
     }
 
     public function edit($id)
