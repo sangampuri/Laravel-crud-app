@@ -10,14 +10,16 @@
                 <!-- Name Field -->
                 <div class="mb-2">
                     <label for="name" class="block text-gray-700 text-sm font-medium mb-1">Full Name *</label>
-                    <input type="text" id="name" name="name" required value={{ $customer->name }}
+                    <input type="text" id="name" name="name" required value="{{ old('name', $customer->name ?? '') }}"
+
                            class="w-full px-3 py-2 border border-gray-300 rounded">
                 </div>
                 
                 <!-- Email Field -->
                 <div class="mb-2">
                     <label for="email" class="block text-gray-700 text-sm font-medium mb-1">Email Address *</label>
-                    <input type="email" id="email" name="email" required value={{ $customer->email }}
+                    <input type="email" id="email" name="email" required value="{{ old('email', $customer->email ?? '') }}"
+
                            class="w-full px-3 py-2 border border-gray-300 rounded">
                 </div>
                 
@@ -38,7 +40,8 @@
                 <!-- Country Field -->
                 <div class="mb-2">
                     <label for="country" class="block text-gray-700 text-sm font-medium mb-1">Country *</label>
-                    <input type="text" id="country" name="country" required value={{ $customer->country }}
+                    <input type="text" id="country" name="country" required value="{{ old('country', $customer->country ?? '') }}"
+
                            class="w-full px-3 py-2 border border-gray-300 rounded">
                     
                 </div>
@@ -46,14 +49,15 @@
                 <!-- State Field -->
                 <div class="mb-2">
                     <label for="state" class="block text-gray-700 text-sm font-medium mb-1">State *</label>
-                    <input type="text" id="state" name="state" required value={{ $customer->state }}
+                    <input type="text" id="state" name="state" required value="{{ old('state', $customer->state ?? '') }}"
+
                            class="w-full px-3 py-2 border border-gray-300 rounded">
                 </div>
                 
                 <!-- Address Field (Spans both columns) -->
                 <div class="mb-2 col-span-2">
                     <label for="address" class="block text-gray-700 text-sm font-medium mb-1">Address *</label>
-                    <textarea id="address" name="address" rows="3" required  {{ $customer->address }}
+                    <textarea id="address" name="address" rows="3" required value="{{ old('email', $customer->state ?? '') }}"
                               class="w-full px-3 py-2 border border-gray-300 rounded"></textarea>
                 </div>
                 
@@ -62,20 +66,20 @@
                     <label class="block text-gray-700 text-sm font-medium mb-2">Gender *</label>
                     <div class="flex space-x-6">
                         <label class="inline-flex items-center">
-                            <input type="radio" name="gender" value="M" required 
-                            {{ $customer->gender == "M" ? "checked" : "" }}
+                            <input type="radio" name="gender" value="male" required 
+                              {{ old('gender', $customer->gender ?? '') === 'male' ? 'checked' : '' }}
                                    class="text-indigo-600 border-gray-300">
                             <span class="ml-2 text-gray-700">Male</span>
                         </label>
                         <label class="inline-flex items-center">
-                            <input type="radio" name="gender" value="F" required 
-                             {{ $customer->gender == "F" ? "checked" : "" }}
+                            <input type="radio" name="gender" value="female" required 
+                               {{ old('gender', $customer->gender ?? '') === 'male' ? 'checked' : '' }}
                                    class="text-indigo-600 border-gray-300">
                             <span class="ml-2 text-gray-700">Female</span>
                         </label>
                         <label class="inline-flex items-center">
-                            <input type="radio" name="gender" value="O" required 
-                             {{ $customer->gender == "O" ? "checked" : "" }}
+                            <input type="radio" name="gender" value="other" required 
+                               {{ old('gender', $customer->gender ?? '') === 'other' ? 'checked' : '' }}
                                    class="text-indigo-600 border-gray-300">
                             <span class="ml-2 text-gray-700">Other</span>
                         </label>
@@ -86,7 +90,7 @@
                 <div class="mb-2">
                     <label for="dob" class="block text-gray-700 text-sm font-medium mb-1">Date of Birth *</label>
                     <input type="date" id="dob" name="dob" required 
-                    value={{ $customer->dob }}
+                    value="{{ old('dob', $customer->dob ?? '') }}"
                            class="w-full px-3 py-2 border border-gray-300 rounded">
                 </div>
             </div>
